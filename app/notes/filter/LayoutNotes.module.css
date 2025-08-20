@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+  
+.sidebar {
+    width: 250px;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    border-right: 1px solid #ddd;
+}
+  
+.notesWrapper {
+    width: 100%;
+}
+
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Поверх всього */
+}
