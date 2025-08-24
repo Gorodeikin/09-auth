@@ -1,4 +1,5 @@
 "use client";
+
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import css from "@/components/Modal/NoteModal.module.css";

@@ -3,7 +3,7 @@
 import { FormEvent, useState, useEffect } from 'react';
 import css from './NoteForm.module.css';
 import type { NoteTag } from '@/types/note';
-import { createNote } from '@/lib/api';
+import { createClientNote } from '@/lib/api/clientApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useNoteStore } from '@/lib/store/noteStore';
@@ -20,7 +20,7 @@ export default function NoteForm() {
   const [tag, setTag] = useState<NoteTag>(draft.tag as NoteTag);
 
   const createMutation = useMutation({
-    mutationFn: createNote,
+    mutationFn: createClientNote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'], exact: false });
       clearDraft();
@@ -45,7 +45,11 @@ export default function NoteForm() {
       return;
     }
 
-    createMutation.mutate({ title, content, tag });
+    createMutation.mutate({
+      title,
+      content,
+      tag,
+    });
   };
 
   const handleCancel = () => {

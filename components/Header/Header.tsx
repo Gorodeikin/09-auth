@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import css from './Header.module.css';
 import TagsMenu from '../TagsMenu/TagsMenu';
+import AuthNavigation from "@/components/AuthNavigation/AuthNavigation";
 
 
 export const Header = () => (
@@ -17,6 +18,7 @@ export const Header = () => (
           <TagsMenu />
         </li>
       </ul>
+      <AuthNavigation />
     </nav>
   </header>
 );

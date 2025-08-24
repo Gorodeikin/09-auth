@@ -1,7 +1,7 @@
-import { fetchNotes, NotesPageData } from "@/lib/api";
+import { NotesPageData } from "@/lib/api/clientApi";
+import { fetchServerNotes } from "@/lib/api/serverApi";
 import NotesClient from "./Notes.client";
 import { Metadata } from "next";
-
 
 type Props = {
   params: Promise<{ slug?: string[] }>;
@@ -34,7 +34,7 @@ export default async function FilteredNotesPage({ params }: Props) {
   const tag = slug[0] ?? "All"; 
   const filterTag = tag === "All" ? undefined : tag;
 
-  const data: NotesPageData = await fetchNotes({ tag: filterTag, page: 1, perPage: 12 });
+  const data: NotesPageData = await fetchServerNotes({ tag: filterTag, page: 1, perPage: 12 });
   
   return <NotesClient initialData={data} tag={filterTag} />
 
