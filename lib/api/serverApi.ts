@@ -4,7 +4,7 @@ import { nextServer } from "./api";
 import { cookies } from "next/headers";
 import type { User } from "@/types/user";
 import type { Note } from "@/types/note";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 const withCookie = async () => {
   const cookieStore = await cookies();
@@ -29,14 +29,14 @@ export const logoutServerUser = async (): Promise<void> => {
   await nextServer.post("/auth/logout", {}, config);
 };
 
-export const checkSessionServer = async (): Promise<User | null> => {
-  try {
-    const config = await withCookie();
-    const { data } = await nextServer.get<User | undefined>("/auth/session", config);
-    return data ?? null;
-  } catch {
-    return null;
-  }
+export const checkSessionServer = async (
+  refreshToken: string
+): Promise<AxiosResponse<{ accessToken: string; refreshToken: string }>> => {
+  return nextServer.post<{ accessToken: string; refreshToken: string }>(
+    "/auth/refresh",
+    { refreshToken },
+    { validateStatus: () => true }
+  );
 };
 
 export const getServerUser = async (): Promise<User | null> => {

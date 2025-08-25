@@ -40,7 +40,7 @@ export default async function ProfilePage() {
      <div className={css.avatarWrapper}>
       <Image
         src={user?.avatar || "/default-avatar.png"}
-        alt="User Avatar"
+        alt={`${user.username} Avatar`}
         width={120}
         height={120}
         className={css.avatar}

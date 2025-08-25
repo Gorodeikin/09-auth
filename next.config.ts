@@ -3,7 +3,12 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["ac.goit.global"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ac.goit.global",
+      },
+    ],
   },
   webpack(config) {
     config.resolve.alias = {
@@ -15,4 +20,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
