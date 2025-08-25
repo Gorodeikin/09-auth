@@ -29,26 +29,15 @@ export const logoutServerUser = async (): Promise<void> => {
   await nextServer.post("/auth/logout", {}, config);
 };
 
-export const checkSessionServer = async (
-  refreshToken: string
-): Promise<AxiosResponse<{ accessToken: string; refreshToken: string }>> => {
-  return nextServer.post<{ accessToken: string; refreshToken: string }>(
-    "/auth/refresh",
-    { refreshToken },
-    { validateStatus: () => true }
-  );
+export const checkSessionServer = async (): Promise<AxiosResponse<User>> => {
+  const config = await withCookie();
+  return nextServer.get<User>("/auth/session", { ...config, validateStatus: () => true });
 };
 
 export const getServerUser = async (): Promise<User | null> => {
   try {
-    const cookieStore = await cookies();
-    const cookieHeader = cookieStore.getAll().map(c => `${c.name}=${c.value}`).join("; ");
-
-    const { data } = await nextServer.get<User>("/users/me", {
-      headers: { Cookie: cookieHeader },
-      withCredentials: true,
-    });
-
+    const config = await withCookie();
+    const { data } = await nextServer.get<User>("/users/me", config);
     return data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
